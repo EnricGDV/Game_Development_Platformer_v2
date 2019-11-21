@@ -212,10 +212,10 @@ bool j1Player::Start()
 	Player.canDash = false;
 	Player.canDJump = true;
 
-	App->audio->LoadFx(jumpFX.GetString());
-	App->audio->LoadFx(deathFX.GetString());
-	App->audio->LoadFx(landFX.GetString());
-	App->audio->LoadFx(tranformationFX.GetString());
+	fxJump = App->audio->LoadFx(jumpFX.GetString());
+	fxDeath = App->audio->LoadFx(deathFX.GetString());
+	fxLand = App->audio->LoadFx(landFX.GetString());
+	fxTransformation = App->audio->LoadFx(tranformationFX.GetString());
 
 	Player.iMaxSpeed = Player.maxSpeed;
 	Player.iSpeed = Player.speed;
@@ -237,10 +237,12 @@ bool j1Player::Update(float dt)
 
 	if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && Player.isDemon)
 	{
+		App->audio->PlayFx(fxTransformation);
 		Player.isDemon = false;
 	}
 	else if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && !Player.isDemon)
 	{
+		App->audio->PlayFx(fxTransformation);
 		Player.isDemon = true;
 	}
 
@@ -272,7 +274,7 @@ bool j1Player::Update(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && Player.onFloor)
 		{
-			App->audio->PlayFx(3,1);
+			App->audio->PlayFx(fxJump);
 			Player.isJumping = true;
 			Player.maxSpeed.x += Player.jumpSpeed.x;
 			Player.speed.x = Player.jumpSpeed.x*Player.xDirection;
@@ -435,6 +437,7 @@ void j1Player::ArrivesFloor()
 {
 	if (Player.isJumping)
 	{
+		App->audio->PlayFx(fxLand);
 		Player.isJumping = false;
 		Player.maxSpeed.x -= Player.jumpSpeed.x;
 		Player.angel_jumping.Reset();
@@ -452,6 +455,7 @@ void j1Player::ArrivesFloor()
 
 void j1Player::DoubleJump()
 {
+	App->audio->PlayFx(fxJump);
 	Player.canDJump = false;
 	Player.isJumping = true;
 	//Player.maxSpeed.x += Player.jumpSpeed.x;

@@ -108,11 +108,16 @@ private:
 public:
 
 	bool				isAlive;
+	//uint				fxDeath;
 	PlayerData			Player;
 
 private:
 
 	p2SString			spritesheetN;
+	uint				fxJump;
+	uint				fxDeath;
+	uint				fxLand;
+	uint				fxTransformation;
 	p2SString			jumpFX;
 	p2SString			deathFX;
 	p2SString			landFX;

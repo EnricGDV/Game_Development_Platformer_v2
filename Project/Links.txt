@@ -1,0 +1,8 @@
+Enemy:
+https://www.spriters-resource.com/ds_dsi/kirbysqueaksquad/sheet/3334/
+FX:
+https://www.sounds-resource.com/game_boy_advance/kirbyandtheamazingmirror/sound/3137/
+Music:
+-Hell(Bowser's Castle Theme - Mario Kart Wii) --> https://www.youtube.com/watch?v=h5bfQHMf6iA
+
+-Heaven(Main Theme - Kid Icarus Uprising) --> https://www.youtube.com/watch?v=k6nOPEMaWAw

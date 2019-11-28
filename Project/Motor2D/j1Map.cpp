@@ -28,6 +28,9 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 
+	hellSong = config.child("hellSong").attribute("source").as_string();
+	heavenSong = config.child("heavenSong").attribute("source").as_string();
+
 	return ret;
 }
 
@@ -541,9 +544,11 @@ bool j1Map::mapChange(p2SString* nmap)
 	if (App->player->Player.map == 1)
 	{
 		App->player->Player.map = 2;
+		App->audio->PlayMusic(hellSong.GetString());
 	}
 	else if (App->player->Player.map == 2)
 	{
+		App->audio->PlayMusic(heavenSong.GetString());
 		App->player->Player.map = 1;
 	}
 	

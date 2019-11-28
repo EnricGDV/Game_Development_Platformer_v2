@@ -164,6 +164,8 @@ private:
 public:
 
 	MapData data;
+	p2SString			hellSong;
+	p2SString			heavenSong;
 
 private:
 

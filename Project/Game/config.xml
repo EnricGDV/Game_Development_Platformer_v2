@@ -25,6 +25,8 @@
 
   <map>
     <folder>maps/</folder>
+    <hellSong source="audio/music/HellSong.ogg"/>
+    <heavenSong source="audio/music/HeavenSong.ogg"/>
   </map>
 
   <audio>

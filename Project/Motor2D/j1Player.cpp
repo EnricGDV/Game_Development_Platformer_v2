@@ -158,6 +158,22 @@ if (temp == "angel_falling_M")
 	Player.angel_falling_M.speed = animations.attribute("speed").as_float();
 	Player.angel_falling_M.loop = animations.attribute("loop").as_bool();
 }
+if (temp == "fire")
+{
+	for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
+		Player.fire.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
+
+	Player.fire.speed = animations.attribute("speed").as_float();
+	Player.fire.loop = animations.attribute("loop").as_bool();
+}
+if (temp == "fireM")
+{
+	for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
+		Player.fireM.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
+
+	Player.fireM.speed = animations.attribute("speed").as_float();
+	Player.fireM.loop = animations.attribute("loop").as_bool();
+}
 	}
 
 	//Player.current_animation = &Player.angel_idle;
@@ -221,6 +237,7 @@ bool j1Player::Start()
 	Player.iSpeed = Player.speed;
 
 	Player.current_animation = &Player.angel_idle;
+	Player.current_fire = &Player.fire;
 
 
 	return true;
@@ -526,6 +543,7 @@ void j1Player::AnimChange()
 	{
 		if (!Player.mirror)
 		{
+			Player.current_fire = &Player.fire;
 			if (Player.onFloor)
 			{
 				if (Player.speed.x == 0)
@@ -548,6 +566,7 @@ void j1Player::AnimChange()
 		}
 		else
 		{
+			Player.current_fire = &Player.fireM;
 			if (Player.onFloor)
 			{
 				if (Player.speed.x == 0)
@@ -582,6 +601,17 @@ void j1Player::PlayerMov()
 
 void j1Player::Draw()
 {
+	if (Player.isDemon)
+	{
+		if (!Player.mirror)
+		{
+			App->render->Blit(graphics, Player.position.x - 2, Player.position.y - 20, &(Player.current_fire->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
+		}
+		else
+		{
+			App->render->Blit(graphics, Player.position.x - 1, Player.position.y - 20, &(Player.current_fire->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
+		}
+	}
 	App->render->Blit(graphics, Player.position.x, Player.position.y, &(Player.current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
 }
 

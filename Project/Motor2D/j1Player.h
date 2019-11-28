@@ -14,6 +14,7 @@ struct SDL_Texture;
 struct PlayerData
 {
 	Animation*			current_animation;
+	Animation*			current_fire;
 	Animation			angel_idle;
 	Animation			angel_moving;
 	Animation			angel_jumping;
@@ -30,6 +31,8 @@ struct PlayerData
 	Animation			demon_moving_M;
 	Animation			demon_jumping_M;
 	Animation			demon_falling_M;
+	Animation			fire;
+	Animation			fireM;
 	bool				canDJump;
 	bool				isDemon;
 	bool				canDash;

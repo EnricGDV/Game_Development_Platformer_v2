@@ -45,100 +45,100 @@
     <deathFX source="audio/fx/Die.wav"/>
     <landFX source="audio/fx/Land.wav"/>
     <transformationFX source="audio/fx/Transformation.wav"/>
-    <acceleration x="1" y="1"/>
-    <jumpSpeed x="1" y="22"/>
+    <acceleration x="30" y="1"/>
+    <jumpSpeed x="1" y="20"/>
     <initPos x ="120" y="2150"/>
     <col w="32" h="32"/>
     <map value= "1"/>
-    <maxSpeed x="1" y="2"/>
+    <maxSpeed x="8" y="10"/>
     <offSet x="0" y="0"/>
     <dashSpeed x="500" y ="0"/>
     <dashTime value="500"/>
     <spritesheetS name="textures/spritesheet.png"/>
     <animations>
-      <animation name="demon_idle" loop="true" speed="0.03">
+      <animation name="demon_idle" loop="true" speed="0.1">
         <frame height="26" width="26" y="210" x="0"/>
         <frame height="26" width="26" y="210" x="66"/>
       </animation>
-      <animation name="demon_moving" loop="true" speed="0.04">
+      <animation name="demon_moving" loop="true" speed="0.15">
         <frame height="26" width="26" y="282" x="134"/>
         <frame height="26" width="26" y="282" x="165"/>
         <frame height="26" width="26" y="282" x="200"/>
       </animation>
-      <animation name="demon_jumping" loop="false" speed="0.03">
+      <animation name="demon_jumping" loop="false" speed="0.1">
         <frame height="26" width="26" y="282" x="267"/>
         <frame height="26" width="26" y="282" x="299"/>
         <frame height="26" width="26" y="282" x="0"/>
       </animation>
-      <animation name="demon_falling" loop="false" speed="0.03">
+      <animation name="demon_falling" loop="false" speed="0.1">
         <frame height="26" width="26" y="282" x="35"/>
         <frame height="26" width="26" y="282" x="67"/>
         <frame height="26" width="26" y="282" x="101"/>
       </animation>
-      <animation name="demon_idle_M" loop="true" speed="0.03">
+      <animation name="demon_idle_M" loop="true" speed="0.1">
         <frame height="26" width="26" y="316" x="66"/>
         <frame height="26" width="26" y="316" x="0"/>
       </animation>
-      <animation name="demon_moving_M" loop="true" speed="0.04">
+      <animation name="demon_moving_M" loop="true" speed="0.15">
         <frame height="26" width="26" y="388" x="163"/>
         <frame height="26" width="26" y="388" x="130"/>
         <frame height="26" width="26" y="388" x="97"/>
       </animation>
-      <animation name="demon_jumping_M" loop="false" speed="0.03">
+      <animation name="demon_jumping_M" loop="false" speed="0.1">
         <frame height="26" width="26" y="388" x="33"/>
         <frame height="26" width="26" y="388" x="0"/>
         <frame height="26" width="26" y="388" x="295"/>
       </animation>
-      <animation name="demon_falling_M" loop="false" speed="0.03">
+      <animation name="demon_falling_M" loop="false" speed="0.1">
         <frame height="26" width="26" y="388" x="262"/>
         <frame height="26" width="26" y="388" x="230"/>
         <frame height="26" width="26" y="388" x="197"/>
       </animation>
-      <animation name="angel_idle" loop="true" speed="0.03">
+      <animation name="angel_idle" loop="true" speed="0.1">
         <frame height="24" width="25" y="131" x="0"/>
         <frame height="24" width="25" y="131" x="29"/>
       </animation>
-      <animation name="angel_moving" loop="true" speed="0.04">
+      <animation name="angel_moving" loop="true" speed="0.15">
         <frame height="24" width="25" y="4" x="0"/>
         <frame height="24" width="25" y="4" x="29"/>
         <frame height="24" width="25" y="4" x="57"/>
       </animation>
-      <animation name="angel_jumping" loop="false" speed="0.03">
+      <animation name="angel_jumping" loop="false" speed="0.1">
         <frame height="24" width="25" y="4" x="116"/>
         <frame height="24" width="25" y="4" x="143"/>
         <frame height="24" width="25" y="4" x="169"/>
       </animation>
-      <animation name="angel_falling" loop="false" speed="0.03">
+      <animation name="angel_falling" loop="false" speed="0.1">
         <frame height="24" width="25" y="4" x="196"/>
         <frame height="24" width="25" y="4" x="223"/>
         <frame height="24" width="25" y="4" x="251"/>
       </animation>
-      <animation name="angel_idle_M" loop="true" speed="0.03">
+      <animation name="angel_idle_M" loop="true" speed="0.1">
         <frame height="24" width="25" y="63" x="0"/>
         <frame height="24" width="25" y="63" x="29"/>
       </animation>
-      <animation name="angel_moving_M" loop="true" speed="0.04">
+      <animation name="angel_moving_M" loop="true" speed="0.15">
         <frame height="24" width="25" y="95" x="251"/>
         <frame height="24" width="25" y="95" x="223"/>
         <frame height="24" width="25" y="95" x="194"/>
       </animation>
-      <animation name="angel_jumping_M" loop="false" speed="0.03">
+      <animation name="angel_jumping_M" loop="false" speed="0.1">
         <frame height="24" width="25" y="95" x="137"/>
         <frame height="24" width="25" y="95" x="111"/>
         <frame height="24" width="25" y="95" x="83"/>
       </animation>
-      <animation name="angel_falling_M" loop="false" speed="0.03">
+      <animation name="angel_falling_M" loop="false" speed="0.1">
         <frame height="24" width="25" y="95" x="56"/>
         <frame height="24" width="25" y="95" x="29"/>
         <frame height="24" width="25" y="95" x="0"/>
       </animation>
-      <animation name="fire" loop="true" speed="0.03">
+      <animation name="fire" loop="true" speed="0.1">
         <frame height="29" width="28" y="245" x="0"/>
         <frame height="29" width="28" y="245" x="35"/>
         <frame height="29" width="28" y="245" x="70"/>
         <frame height="29" width="28" y="245" x="101"/>
       </animation>
-      <animation name="fireM" loop="true" speed="0.03">
+      <animation name="fireM" loop="true" speed="0.1">
         <frame height="29" width="28" y="349" x="0"/>
         <frame height="29" width="28" y="349" x="33"/>
         <frame height="29" width="28" y="349" x="70"/>

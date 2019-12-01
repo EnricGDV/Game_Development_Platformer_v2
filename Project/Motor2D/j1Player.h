@@ -97,9 +97,9 @@ public:
 
 	iPoint Gravity(iPoint vec);
 
-	void SpeedUp();
+	void SpeedUp(float dt);
 
-	void SpeedDown();
+	void SpeedDown(float dt);
 
 	void ArrivesFloor();
 

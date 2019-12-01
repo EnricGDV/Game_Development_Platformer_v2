@@ -308,11 +308,11 @@ bool j1Player::Update(float dt)
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-				Player.xDirection = 1, SpeedUp();
+				Player.xDirection = 1, SpeedUp(dt);
 			else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-				Player.xDirection = -1, SpeedUp();
+				Player.xDirection = -1, SpeedUp(dt);
 			else
-				SpeedDown();
+				SpeedDown(dt);
 
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && Player.onFloor)
 			{
@@ -453,34 +453,41 @@ void j1Player::MirrorSprite()
 }
 
 
-void j1Player::SpeedUp()
+void j1Player::SpeedUp(float dt)
 {
-	Player.speed.x += Player.acceleration.x * Player.xDirection;
+	Player.speed.x += Player.acceleration.x * Player.xDirection * dt;
 
 	if (Player.xDirection > 0)
 	{
-		if (Player.speed.x > Player.maxSpeed.x)
+		if (Player.speed.x > Player.maxSpeed.x *dt)
 			Player.speed.x = Player.maxSpeed.x;
 	}
 
 	else
 	{
 		if (Player.speed.x < Player.xDirection*Player.maxSpeed.x)
-			Player.speed.x = Player.xDirection*Player.maxSpeed.x;
+			Player.speed.x = Player.xDirection*Player.maxSpeed.x * dt;
 	}
 }
 
-void j1Player::SpeedDown()
+void j1Player::SpeedDown(float dt)
 {
 	if (Player.speed.x != 0)
-		Player.speed.x -= Player.acceleration.x * Player.xDirection;
+		Player.speed.x -= Player.acceleration.x * Player.xDirection * dt;
 }
 
 void j1Player::Dashing(float dt)
 {
 	Player.isDashing = true;
 	Player.canDash = false;
-	Player.speed.x = Player.dashSpeed.x * dt;
+	if (!Player.mirror)
+	{
+		Player.speed.x = Player.dashSpeed.x * dt;
+	}
+	else
+	{
+		Player.speed.x = -Player.dashSpeed.x * dt;
+	}
 	Player.speed.y = Player.dashSpeed.y;
 	Player.initialDashTime = SDL_GetTicks();
 
@@ -626,7 +633,8 @@ void j1Player::AnimChange()
 
 void j1Player::PlayerMov()
 {
-	Player.position += Player.speed;
+	Player.position.x = Player.position.x + Player.speed.x;
+	Player.position.y = Player.position.y + Player.speed.y;
 
 	Player.collider->SetPos(Player.position.x + Player.offSet.x, Player.position.y + Player.offSet.y);
 }

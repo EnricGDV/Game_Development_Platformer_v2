@@ -16,6 +16,7 @@
 #include "j1App.h"
 #include "j1Player.h"
 #include "ModuleCollision.h"
+#include "j1Pathfinding.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -33,6 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	player = new j1Player();
 	collision = new ModuleCollision();
+	pathfinding = new j1PathFinding();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -44,6 +46,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(player);
 	AddModule(collision);
+		AddModule(pathfinding);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -214,14 +217,18 @@ void j1App::FinishUpdate()
 	App->win->SetTitle(title);
 
 	// TODO 2: Use SDL_Delay to make sure you get your capped framerate
-	if (last_frame_ms < (1000 / framerate_cap))
+	if (frcap)
 	{
-		j1PerfTimer delay;
-		SDL_Delay((1000 / framerate_cap) - last_frame_ms);
+		if (last_frame_ms < (1000 / framerate_cap))
+		{
+			j1PerfTimer delay;
+			SDL_Delay((1000 / framerate_cap) - last_frame_ms);
 
-		// TODO3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
-		LOG("We waited for %d miliseconds and got back in %.5f", (1000 / framerate_cap) - last_frame_ms, delay.ReadMs());
+			// TODO3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
+			LOG("We waited for %d miliseconds and got back in %.5f", (1000 / framerate_cap) - last_frame_ms, delay.ReadMs());
+		}
 	}
+	
 }
 
 // Call modules before each loop iteration

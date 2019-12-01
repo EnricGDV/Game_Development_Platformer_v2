@@ -38,13 +38,17 @@ struct PlayerData
 	bool				canDash;
 	bool				mirror;
 	bool				isJumping;
+	bool				isDashing;
 	bool				onFloor;
 	bool                godmode = false;
 	int					xDirection;
 	int                 map;
 	int                 savedmap;
-	int					dashForce;
+	int					dashTime;
+	float				currentDashTime;
+	float				initialDashTime;
 	iPoint				jumpSpeed;
+	iPoint				dashSpeed;
 	iPoint				acceleration;
 	iPoint				maxSpeed;
 	iPoint				iMaxSpeed;
@@ -53,6 +57,7 @@ struct PlayerData
 	iPoint				position;
 	iPoint              initPosition;
 	iPoint				offSet;
+	j1Timer				dashTimer;
 	Collider*			collider;
 	SDL_Rect            colInit;
 
@@ -86,8 +91,6 @@ public:
 
 	void DoubleJump();
 
-	void Dash();
-
 	void MirrorSprite();
 
 	void AnimChange();
@@ -99,6 +102,10 @@ public:
 	void SpeedDown();
 
 	void ArrivesFloor();
+
+	void Dashing(float dt);
+
+	void StopDash();
 
 	void PlayerMov();
 

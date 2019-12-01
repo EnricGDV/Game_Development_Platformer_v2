@@ -191,7 +191,10 @@ if (temp == "fireM")
 	Player.offSet.x = config.child("offSet").attribute("x").as_int();
 	Player.offSet.y = config.child("offSet").attribute("y").as_int();
 
-	Player.dashForce = config.child("dashForce").attribute("x").as_int();
+	Player.dashSpeed.x = config.child("dashSpeed").attribute("x").as_int();
+	Player.dashSpeed.y = config.child("dashSpeed").attribute("y").as_int();
+
+	Player.dashTime = config.child("dashTime").attribute("value").as_int();
 
 	Player.position.x = config.child("initPos").attribute("x").as_int();
 	Player.position.y = config.child("initPos").attribute("y").as_int();
@@ -225,8 +228,11 @@ bool j1Player::Start()
 	isAlive = true;
 
 	Player.isJumping = false;
+	Player.isDashing = false;
 	Player.canDash = false;
 	Player.canDJump = true;
+
+	Player.currentDashTime = 0;
 
 	fxJump = App->audio->LoadFx(jumpFX.GetString());
 	fxDeath = App->audio->LoadFx(deathFX.GetString());
@@ -252,16 +258,6 @@ bool j1Player::Update(float dt)
 {
 	MirrorSprite();
 
-	if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && Player.isDemon)
-	{
-		App->audio->PlayFx(fxTransformation);
-		Player.isDemon = false;
-	}
-	else if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && !Player.isDemon)
-	{
-		App->audio->PlayFx(fxTransformation);
-		Player.isDemon = true;
-	}
 
 	if (!Player.godmode)
 	{
@@ -273,30 +269,60 @@ bool j1Player::Update(float dt)
 		{
 			Player.canDash = false;
 		}
-		if ((Player.canDash) && (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN))
+
+		if (!Player.isDashing && Player.canDash)
 		{
-			Dash();
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+				Dashing(dt);
 		}
-		if ((Player.isJumping && Player.canDJump) && (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
+		else if (Player.isDashing)
 		{
-			DoubleJump();
+			Player.currentDashTime = SDL_GetTicks();
+
+			if (Player.currentDashTime >= Player.initialDashTime + Player.dashTime)
+			{
+				StopDash();
+			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-			Player.xDirection = 1, SpeedUp();
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-			Player.xDirection = -1, SpeedUp();
-		else
-			SpeedDown();
-
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && Player.onFloor)
+		if (!Player.isDashing)
 		{
-			App->audio->PlayFx(fxJump);
-			Player.isJumping = true;
-			Player.maxSpeed.x += Player.jumpSpeed.x;
-			Player.speed.x = Player.jumpSpeed.x*Player.xDirection;
-			Player.speed.y = -Player.jumpSpeed.y;
-			Player.onFloor = false;
+			if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && Player.isDemon)
+			{
+				App->audio->PlayFx(fxTransformation);
+				Player.isDemon = false;
+			}
+			else if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && !Player.isDemon)
+			{
+				App->audio->PlayFx(fxTransformation);
+				Player.isDemon = true;
+			}
+
+			if ((Player.canDash) && (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN))
+			{
+				Dashing(dt);
+			}
+			if ((Player.isJumping && Player.canDJump) && (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
+			{
+				DoubleJump();
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+				Player.xDirection = 1, SpeedUp();
+			else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+				Player.xDirection = -1, SpeedUp();
+			else
+				SpeedDown();
+
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && Player.onFloor)
+			{
+				App->audio->PlayFx(fxJump);
+				Player.isJumping = true;
+				Player.maxSpeed.x += Player.jumpSpeed.x;
+				Player.speed.x = Player.jumpSpeed.x*Player.xDirection;
+				Player.speed.y = -Player.jumpSpeed.y;
+				Player.onFloor = false;
+			}
 		}
 	}
 	else if (Player.godmode)
@@ -450,6 +476,21 @@ void j1Player::SpeedDown()
 		Player.speed.x -= Player.acceleration.x * Player.xDirection;
 }
 
+void j1Player::Dashing(float dt)
+{
+	Player.isDashing = true;
+	Player.canDash = false;
+	Player.speed.x = Player.dashSpeed.x * dt;
+	Player.speed.y = Player.dashSpeed.y;
+	Player.initialDashTime = SDL_GetTicks();
+
+}
+
+void j1Player::StopDash()
+{
+	Player.isDashing = false;
+}
+
 void j1Player::ArrivesFloor()
 {
 	if (Player.isJumping)
@@ -480,15 +521,6 @@ void j1Player::DoubleJump()
 	Player.speed.y = -Player.jumpSpeed.y;
 }
 
-void j1Player::Dash()
-{
-	if (!Player.mirror)
-		Player.position.x += Player.dashForce;
-	else
-		Player.position.x -= Player.dashForce;
-	
-	Player.canDash = false;
-}
 
 void j1Player::AnimChange()
 {

@@ -52,7 +52,8 @@
     <map value= "1"/>
     <maxSpeed x="1" y="2"/>
     <offSet x="0" y="0"/>
-    <dashForce x="20"/>
+    <dashSpeed x="500" y ="0"/>
+    <dashTime value="500"/>
     <spritesheetS name="textures/spritesheet.png"/>
     <animations>
       <animation name="demon_idle" loop="true" speed="0.03">

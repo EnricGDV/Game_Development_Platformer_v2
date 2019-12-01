@@ -17,6 +17,7 @@ class j1Scene;
 class j1Map;
 class j1Player;
 class ModuleCollision;
+class j1PathFinding;
 
 class j1App
 {
@@ -89,6 +90,9 @@ public:
 	j1Map*				map;
 	j1Player*			player;
 	ModuleCollision*    collision;
+	j1PathFinding*      pathfinding;
+
+	bool                frcap = true;
 
 private:
 

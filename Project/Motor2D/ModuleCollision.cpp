@@ -3,6 +3,7 @@
 #include "j1Render.h"
 #include "ModuleCollision.h"
 #include "p2Log.h"
+#include "Brofiler/Brofiler/Brofiler.h"
 
 ModuleCollision::ModuleCollision()
 {
@@ -94,7 +95,7 @@ bool ModuleCollision::PreUpdate()
 // Called before render is available
 bool ModuleCollision::Update(float dt)
 {
-
+	BROFILER_CATEGORY("UpdateCollision", Profiler::Color::DeepPink);
 	DebugDraw();
 
 	return true;

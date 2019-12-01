@@ -10,6 +10,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "ModuleCollision.h"
+#include "Brofiler/Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -49,6 +50,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateScene", Profiler::Color::LimeGreen);
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
 		int map1 = App->player->Player.savedmap;

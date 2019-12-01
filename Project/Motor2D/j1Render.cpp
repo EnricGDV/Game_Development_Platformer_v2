@@ -4,6 +4,7 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Player.h"
+#include "Brofiler/Brofiler/Brofiler.h"
 
 #define VSYNC false
 
@@ -70,6 +71,7 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateRender", Profiler::Color::MediumSlateBlue);
 	if (App->player->Player.position.x >= 115)
 	{
 		camera.x = -(App->player->Player.position.x + speed.x) + App->win->width / 2;

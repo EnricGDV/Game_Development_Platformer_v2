@@ -10,6 +10,7 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "ModuleCollision.h"
+#include "Brofiler/Brofiler/Brofiler.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -256,6 +257,8 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdatePlayer", Profiler::Color::DodgerBlue);
+
 	MirrorSprite();
 
 

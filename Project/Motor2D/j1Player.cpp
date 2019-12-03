@@ -143,65 +143,65 @@ bool j1Player::Awake(pugi::xml_node& config)
 			Player.angel_moving_M.speed = animations.attribute("speed").as_float();
 			Player.angel_moving_M.loop = animations.attribute("loop").as_bool();
 		}
-if (temp == "angel_jumping_M")
-{
-	for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
-		Player.angel_jumping_M.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
+		if (temp == "angel_jumping_M")
+		{
+			for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
+				Player.angel_jumping_M.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
 
-	Player.angel_jumping_M.speed = animations.attribute("speed").as_float();
-	Player.angel_jumping_M.loop = animations.attribute("loop").as_bool();
-}
-if (temp == "angel_falling_M")
-{
-	for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
-		Player.angel_falling_M.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
+			Player.angel_jumping_M.speed = animations.attribute("speed").as_float();
+			Player.angel_jumping_M.loop = animations.attribute("loop").as_bool();
+		}
+		if (temp == "angel_falling_M")
+		{
+			for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
+				Player.angel_falling_M.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
 
-	Player.angel_falling_M.speed = animations.attribute("speed").as_float();
-	Player.angel_falling_M.loop = animations.attribute("loop").as_bool();
-}
-if (temp == "fire")
-{
-	for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
-		Player.fire.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
+			Player.angel_falling_M.speed = animations.attribute("speed").as_float();
+			Player.angel_falling_M.loop = animations.attribute("loop").as_bool();
+		}
+		if (temp == "fire")
+		{
+			for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
+				Player.fire.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
 
-	Player.fire.speed = animations.attribute("speed").as_float();
-	Player.fire.loop = animations.attribute("loop").as_bool();
-}
-if (temp == "fireM")
-{
-	for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
-		Player.fireM.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
+			Player.fire.speed = animations.attribute("speed").as_float();
+			Player.fire.loop = animations.attribute("loop").as_bool();
+		}
+		if (temp == "fireM")
+		{
+			for (pugi::xml_node frame = animations.child("frame"); frame && ret; frame = frame.next_sibling("frame"))
+				Player.fireM.PushBack({ frame.attribute("x").as_int() , frame.attribute("y").as_int(), frame.attribute("width").as_int(), frame.attribute("height").as_int() });
 
-	Player.fireM.speed = animations.attribute("speed").as_float();
-	Player.fireM.loop = animations.attribute("loop").as_bool();
-}
+			Player.fireM.speed = animations.attribute("speed").as_float();
+			Player.fireM.loop = animations.attribute("loop").as_bool();
+		}
 	}
 
 	//Player.current_animation = &Player.angel_idle;
 
-	Player.jumpSpeed.x = config.child("jumpSpeed").attribute("x").as_int();
-	Player.jumpSpeed.y = config.child("jumpSpeed").attribute("y").as_int();
+	Player.jumpSpeed.x = config.child("jumpSpeed").attribute("x").as_float();
+	Player.jumpSpeed.y = config.child("jumpSpeed").attribute("y").as_float();
 
-	Player.maxSpeed.x = config.child("maxSpeed").attribute("x").as_int();
-	Player.maxSpeed.y = config.child("maxSpeed").attribute("y").as_int();
+	Player.maxSpeed.x = config.child("maxSpeed").attribute("x").as_float();
+	Player.maxSpeed.y = config.child("maxSpeed").attribute("y").as_float();
 
 
-	Player.acceleration.x = config.child("acceleration").attribute("x").as_int();
-	Player.acceleration.y = config.child("acceleration").attribute("y").as_int();
+	Player.acceleration.x = config.child("acceleration").attribute("x").as_float();
+	Player.acceleration.y = config.child("acceleration").attribute("y").as_float();
 
-	Player.offSet.x = config.child("offSet").attribute("x").as_int();
-	Player.offSet.y = config.child("offSet").attribute("y").as_int();
+	Player.offSet.x = config.child("offSet").attribute("x").as_float();
+	Player.offSet.y = config.child("offSet").attribute("y").as_float();
 
-	Player.dashSpeed.x = config.child("dashSpeed").attribute("x").as_int();
-	Player.dashSpeed.y = config.child("dashSpeed").attribute("y").as_int();
+	Player.dashSpeed.x = config.child("dashSpeed").attribute("x").as_float();
+	Player.dashSpeed.y = config.child("dashSpeed").attribute("y").as_float();
 
 	Player.dashTime = config.child("dashTime").attribute("value").as_int();
 
-	Player.position.x = config.child("initPos").attribute("x").as_int();
-	Player.position.y = config.child("initPos").attribute("y").as_int();
+	Player.position.x = config.child("initPos").attribute("x").as_float();
+	Player.position.y = config.child("initPos").attribute("y").as_float();
 
-	Player.initPosition.x = config.child("initPos").attribute("x").as_int();
-	Player.initPosition.y = config.child("initPos").attribute("y").as_int();
+	Player.initPosition.x = config.child("initPos").attribute("x").as_float();
+	Player.initPosition.y = config.child("initPos").attribute("y").as_float();
 
 	Player.collider = App->collision->AddCollider({ config.child("position").attribute("x").as_int(), config.child("position").attribute("y").as_int(), config.child("col").attribute("w").as_int(), config.child("col").attribute("h").as_int() }, COLLIDER_PLAYER, this);
 	Player.colInit = { config.child("position").attribute("x").as_int(), config.child("position").attribute("y").as_int(), config.child("col").attribute("w").as_int(), config.child("col").attribute("h").as_int() };
@@ -310,9 +310,9 @@ bool j1Player::Update(float dt)
 				DoubleJump();
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT))
 				Player.xDirection = 1, SpeedUp(dt);
-			else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			else if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT))
 				Player.xDirection = -1, SpeedUp(dt);
 			else
 				SpeedDown(dt);
@@ -322,7 +322,7 @@ bool j1Player::Update(float dt)
 				App->audio->PlayFx(fxJump);
 				Player.isJumping = true;
 				Player.maxSpeed.x += Player.jumpSpeed.x;
-				Player.speed.x = Player.jumpSpeed.x*Player.xDirection;
+				//Player.speed.x = Player.jumpSpeed.x*Player.xDirection;
 				Player.speed.y = -Player.jumpSpeed.y;
 				Player.onFloor = false;
 			}
@@ -403,7 +403,7 @@ bool j1Player::Update(float dt)
 
 
 	AnimChange();
-	PlayerMov();
+	PlayerMov(dt);
 	Draw();
 	return true;
 }
@@ -471,14 +471,14 @@ void j1Player::SpeedUp(float dt)
 
 	if (Player.xDirection > 0)
 	{
-		if (Player.speed.x > Player.maxSpeed.x *dt)
+		if (Player.speed.x > Player.maxSpeed.x)
 			Player.speed.x = Player.maxSpeed.x;
 	}
 
 	else
 	{
 		if (Player.speed.x < Player.xDirection*Player.maxSpeed.x)
-			Player.speed.x = Player.xDirection*Player.maxSpeed.x * dt;
+			Player.speed.x = Player.xDirection*Player.maxSpeed.x;
 	}
 }
 
@@ -486,6 +486,15 @@ void j1Player::SpeedDown(float dt)
 {
 	if (Player.speed.x != 0)
 		Player.speed.x -= Player.acceleration.x * Player.xDirection * dt;
+	
+	if (!Player.mirror && Player.speed.x <= 0)
+	{
+		Player.speed.x = 0;
+	}
+	else if (Player.mirror && Player.speed.x >= 0)
+	{
+		Player.speed.x = 0;
+	}
 }
 
 void j1Player::Dashing(float dt)
@@ -643,10 +652,10 @@ void j1Player::AnimChange()
 	
 }
 
-void j1Player::PlayerMov()
+void j1Player::PlayerMov(float dt)
 {
-	Player.position.x = Player.position.x + Player.speed.x;
-	Player.position.y = Player.position.y + Player.speed.y;
+	Player.position.x = Player.position.x + Player.speed.x * dt;
+	Player.position.y = Player.position.y + Player.speed.y * dt * 20;
 
 	Player.collider->SetPos(Player.position.x + Player.offSet.x, Player.position.y + Player.offSet.y);
 }
@@ -667,7 +676,7 @@ void j1Player::Draw()
 	App->render->Blit(graphics, Player.position.x, Player.position.y, &(Player.current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
 }
 
-iPoint j1Player::Gravity(iPoint vec)
+fPoint j1Player::Gravity(fPoint vec)
 {
 	vec.y += Player.acceleration.y;
 	if (vec.y > Player.maxSpeed.y)

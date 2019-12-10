@@ -46,8 +46,8 @@
     <landFX source="audio/fx/Land.wav"/>
     <transformationFX source="audio/fx/Transformation.wav"/>
     <acceleration x="300" y="1"/>
-    <jumpSpeed x="1" y="20"/>
-    <initPos x ="120" y="2150"/>
+    <jumpSpeed x="1" y="28"/>
+    <initPos x ="120" y="2025"/>
     <col w="32" h="32"/>
     <map value= "1"/>
     <maxSpeed x="200" y="10"/>

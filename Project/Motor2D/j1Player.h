@@ -116,7 +116,10 @@ public:
 private:
 
 public:
-
+	bool				leftCollider;
+	bool				rightCollider;
+	bool				downCollider;
+	bool				upCollider;
 	bool				isAlive;
 	//uint				fxDeath;
 	PlayerData			Player;

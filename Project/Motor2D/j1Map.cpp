@@ -544,10 +544,12 @@ bool j1Map::mapChange(p2SString* nmap)
 	if (App->player->Player.map == 1)
 	{
 		App->player->Player.map = 2;
+		App->player->ResetPlayer();
 		App->audio->PlayMusic(hellSong.GetString());
 	}
 	else if (App->player->Player.map == 2)
 	{
+		App->player->ResetPlayer();
 		App->audio->PlayMusic(heavenSong.GetString());
 		App->player->Player.map = 1;
 	}

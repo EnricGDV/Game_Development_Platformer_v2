@@ -197,8 +197,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	Player.dashTime = config.child("dashTime").attribute("value").as_int();
 
-	Player.position.x = config.child("initPos").attribute("x").as_float();
-	Player.position.y = config.child("initPos").attribute("y").as_float();
+	/*Player.position.x = config.child("initPos").attribute("x").as_float();
+	Player.position.y = config.child("initPos").attribute("y").as_float();*/
 
 	Player.initPosition.x = config.child("initPos").attribute("x").as_float();
 	Player.initPosition.y = config.child("initPos").attribute("y").as_float();
@@ -242,6 +242,8 @@ bool j1Player::Start()
 
 	Player.iMaxSpeed = Player.maxSpeed;
 	Player.iSpeed = Player.speed;
+
+	Player.position = Player.initPosition;
 
 	Player.current_animation = &Player.angel_idle;
 	Player.current_fire = &Player.fire;
@@ -310,10 +312,10 @@ bool j1Player::Update(float dt)
 				DoubleJump();
 			}
 
-			if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT))
-				Player.xDirection = 1, SpeedUp(dt);
-			else if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT))
-				Player.xDirection = -1, SpeedUp(dt);
+			if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT) && !rightCollider)
+					Player.xDirection = 1, SpeedUp(dt);
+			else if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT) && !leftCollider)
+					Player.xDirection = -1, SpeedUp(dt);
 			else
 				SpeedDown(dt);
 
@@ -331,16 +333,16 @@ bool j1Player::Update(float dt)
 	else if (Player.godmode)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-			Player.position.y -= 2;					
+			Player.position.y -= 200 * dt;					
 													
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-			Player.position.x -= 2;					  
+			Player.position.x -= 200 * dt;					  
 													  
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-			Player.position.y += 2;					
+			Player.position.y += 200 * dt;					
 													
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-			Player.position.x += 2;
+			Player.position.x += 200 * dt;
 
 	}
 
@@ -410,6 +412,7 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
+	rightCollider = leftCollider = upCollider = downCollider = false;
 	return true;
 }
 
@@ -485,7 +488,18 @@ void j1Player::SpeedUp(float dt)
 void j1Player::SpeedDown(float dt)
 {
 	if (Player.speed.x != 0)
-		Player.speed.x -= Player.acceleration.x * Player.xDirection * dt;
+	{
+		if (!leftCollider)
+			Player.speed.x -= Player.acceleration.x * Player.xDirection * dt;
+		else
+			Player.speed.x = 0;
+		if (!rightCollider)
+			Player.speed.x -= Player.acceleration.x * Player.xDirection * dt;
+		else
+			Player.speed.x = 0;
+	}
+	
+
 	
 	if (!Player.mirror && Player.speed.x <= 0)
 	{
@@ -683,6 +697,11 @@ fPoint j1Player::Gravity(fPoint vec)
 	{
 		vec.y = Player.maxSpeed.y;
 	}
+	vec.y += Player.acceleration.y;
+	if (vec.y > Player.maxSpeed.y)
+	{
+		vec.y = Player.maxSpeed.y;
+	}
 
 	return vec;
 }
@@ -702,19 +721,54 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)
 	{
-		if (Player.speed.y >= 0 && c2->rect.y > c1->rect.y)
+		if (!Player.godmode)
 		{
-			Player.position.y = c2->rect.y - c1->rect.h;
-			ArrivesFloor();
-		}
-		else if ((c2->rect.y + c2->rect.h) > c1->rect.y && c2->rect.y < c1->rect.y)
-		{
-			if (Player.speed.x > 0)
-				Player.position.x = c2->rect.x - 1;
-			else if (Player.speed.x < 0)
-				Player.position.x = c2->rect.x + c2->rect.w + 1;
+			/*if (Player.speed.y >= 0 && c2->rect.y > c1->rect.y)
+			{
+				Player.position.y = c2->rect.y - c1->rect.h;
+				ArrivesFloor();
+			}*/
+
+			if (c1->rect.x + c1->rect.w >= c2->rect.x + 4 && c1->rect.x + 4 <= c2->rect.x + c2->rect.w)
+			{
+				//down
+				if (c1->rect.y + c1->rect.h >= c2->rect.y && c1->rect.y < c2->rect.y)
+				{
+					ArrivesFloor();
+					Player.isJumping = false;
+					Player.position.y = c2->rect.y - c1->rect.h + 1;
+					Player.speed.y = 0;
+					downCollider = true;
+					upCollider = false;
+				}
+				// up
+				else if (c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y > c2->rect.y)
+				{
+					//Player.position.y = c2->rect.y + c2->rect.h;
+					downCollider = false;
+					upCollider = true;
+				}
+
+			}
+
+			if (c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + c1->rect.h - 5 >= c2->rect.y)
+			{
+				// right
+				if (c1->rect.x + c1->rect.w >= c2->rect.x && c1->rect.x <= c2->rect.x)
+				{
+					rightCollider = true;
+					leftCollider = false;
+				}
+				// left
+				else if (c1->rect.x <= c2->rect.x + c2->rect.w && c1->rect.x + c1->rect.w >= c2->rect.x + c2->rect.w)
+				{
+					leftCollider = true;
+					rightCollider = false;
+				}
+			}
 		}
 	}
+	
 
 	else if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY)
 	{

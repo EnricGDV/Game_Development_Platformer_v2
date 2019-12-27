@@ -36,6 +36,7 @@ bool j1Scene::Start()
 
 	App->map->Load("map1.tmx");
 	App->audio->PlayMusic(App->map->heavenSong.GetString());
+	//App->player->ResetPlayer();
 	App->map->DrawObjects();
 	//App->map->Load("iso.tmx");
 	return true;

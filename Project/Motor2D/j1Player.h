@@ -47,16 +47,16 @@ struct PlayerData
 	int					dashTime;
 	float				currentDashTime;
 	float				initialDashTime;
-	iPoint				jumpSpeed;
-	iPoint				dashSpeed;
-	iPoint				acceleration;
-	iPoint				maxSpeed;
-	iPoint				iMaxSpeed;
-	iPoint				speed;
-	iPoint				iSpeed;
-	iPoint				position;
-	iPoint              initPosition;
-	iPoint				offSet;
+	fPoint				jumpSpeed;
+	fPoint				dashSpeed;
+	fPoint				acceleration;
+	fPoint				maxSpeed;
+	fPoint				iMaxSpeed;
+	fPoint				speed;
+	fPoint				iSpeed;
+	fPoint				position;
+	fPoint              initPosition;
+	fPoint				offSet;
 	j1Timer				dashTimer;
 	Collider*			collider;
 	SDL_Rect            colInit;
@@ -95,7 +95,7 @@ public:
 
 	void AnimChange();
 
-	iPoint Gravity(iPoint vec);
+	fPoint Gravity(fPoint vec);
 
 	void SpeedUp(float dt);
 
@@ -107,7 +107,7 @@ public:
 
 	void StopDash();
 
-	void PlayerMov();
+	void PlayerMov(float dt);
 
 	void ResetPlayer();
 
@@ -116,7 +116,10 @@ public:
 private:
 
 public:
-
+	bool				leftCollider;
+	bool				rightCollider;
+	bool				downCollider;
+	bool				upCollider;
 	bool				isAlive;
 	//uint				fxDeath;
 	PlayerData			Player;

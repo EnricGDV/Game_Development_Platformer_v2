@@ -18,6 +18,8 @@ class j1Map;
 class j1Player;
 class ModuleCollision;
 class j1PathFinding;
+class j1Gui;
+class j1Fonts;
 
 class j1App
 {
@@ -91,6 +93,8 @@ public:
 	j1Player*			player;
 	ModuleCollision*    collision;
 	j1PathFinding*      pathfinding;
+	j1Gui*              gui;
+	j1Fonts*            fonts;
 
 	bool                frcap = true;
 
